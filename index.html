@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Remon Cloud Ultimate Store</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:monospace;
+}
+
+body{
+background:black;
+color:#00ffd5;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* MATRIX */
+
+#matrix{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+/* LOADER */
+
+.loader{
+position:fixed;
+width:100%;
+height:100vh;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+color:#00ffd5;
+animation:hideLoader 3s forwards;
+z-index:999;
+}
+
+@keyframes hideLoader{
+0%{opacity:1}
+90%{opacity:1}
+100%{opacity:0;visibility:hidden}
+}
+
+/* RUNNING TEXT */
+
+.marquee{
+background:black;
+padding:10px;
+font-size:18px;
+}
+
+/* LOGO */
+
+.logo{
+font-size:40px;
+margin-top:40px;
+animation:glitch 1.5s infinite;
+}
+
+@keyframes glitch{
+0%{text-shadow:2px 2px red}
+25%{text-shadow:-2px -2px blue}
+50%{text-shadow:2px -2px green}
+75%{text-shadow:-2px 2px purple}
+100%{text-shadow:2px 2px red}
+}
+
+/* MENU */
+
+.menu{
+margin-top:40px;
+}
+
+.btn{
+display:inline-block;
+margin:10px;
+padding:15px 30px;
+border:2px solid #00ffd5;
+color:#00ffd5;
+text-decoration:none;
+font-size:18px;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#00ffd5;
+color:black;
+box-shadow:0 0 20px #00ffd5;
+}
+
+/* PAGE */
+
+.page{
+display:none;
+padding-top:60px;
+}
+
+.active{
+display:block;
+}
+
+/* CARD */
+
+.card{
+background:rgba(0,0,0,0.7);
+border:1px solid #00ffd5;
+padding:20px;
+margin:20px;
+border-radius:10px;
+}
+
+/* QRIS */
+
+.qris img{
+width:260px;
+border-radius:10px;
+box-shadow:0 0 20px #00ffd5;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="loader">
+Loading Remon Cloud Store...
+</div>
+
+<div class="marquee">
+<marquee>⚡ SELAMAT DATANG DI TOKO REMON CLOUD ⚡ HOSTING • PANEL • DIGITAL SERVICE ⚡</marquee>
+</div>
+
+<div class="logo">REM0N CLOUD</div>
+
+<div class="menu">
+
+<button class="btn" onclick="openPage('produk')">PRODUK</button>
+
+<button class="btn" onclick="openPage('jasa')">JASA</button>
+
+<button class="btn" onclick="openPage('payment')">PAYMENT</button>
+
+<a class="btn" href="https://wa.me/6289677477066">WHATSAPP</a>
+
+</div>
+
+<!-- PRODUK -->
+
+<div id="produk" class="page">
+
+<h1>PRICE LIST HOSTING SA-MP</h1>
+
+<div class="card">
+<p>20 Slot — Rp10.000</p>
+<p>50 Slot — Rp20.000</p>
+<p>70 Slot — Rp30.000</p>
+<p>100 Slot — Rp35.000 PROMO</p>
+<p>250 Slot — Rp50.000 PROMO</p>
+</div>
+
+<button class="btn" onclick="closePage()">KEMBALI</button>
+
+</div>
+
+<!-- JASA -->
+
+<div id="jasa" class="page">
+
+<h1>JASA SERVER</h1>
+
+<div class="card">
+<p>GM INFERNO — 10K</p>
+<p>GM LRP — 15K</p>
+<p>SETUP BOT JS — 10K</p>
+</div>
+
+<button class="btn" onclick="closePage()">KEMBALI</button>
+
+</div>
+
+<!-- PAYMENT -->
+
+<div id="payment" class="page">
+
+<h1>PAYMENT</h1>
+
+<div class="card">
+
+<p>DANA / GOPAY / OVO</p>
+<p><b>089677477066</b></p>
+<p>A/N NULIYAH R*****</p>
+
+<div class="qris">
+<img src="qris.jpg">
+</div>
+
+</div>
+
+<button class="btn" onclick="closePage()">KEMBALI</button>
+
+</div>
+
+<script>
+
+function openPage(id){
+
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+document.getElementById(id).classList.add("active");
+
+}
+
+function closePage(){
+
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+}
+
+</script>
+
+<script>
+
+/* MATRIX EFFECT */
+
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+const letters="REM0NCLOUDHACKER01";
+const matrix=letters.split("");
+
+const fontSize=14;
+const columns=canvas.width/fontSize;
+
+const drops=[];
+
+for(let x=0;x<columns;x++)
+drops[x]=1;
+
+function draw(){
+
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ffd5";
+ctx.font=fontSize+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+
+const text=matrix[Math.floor(Math.random()*matrix.length)];
+
+ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+
+if(drops[i]*fontSize>canvas.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+
+}
+
+}
+
+setInterval(draw,33);
+
+</script>
+
+</body>
+</html>
